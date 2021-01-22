@@ -43,6 +43,22 @@ app.get('/events', (req, res) => {
     res.json(mockEvents);
 });
 
+app.post('/like', (req, res) => {
+    // create a new object from the json data and add an id
+    console.log('called like: ' + req.body.eventId);
+    const id = req.body.eventId;
+    
+    mockEvents.events.forEach(event => {
+        console.log(event);
+        if (event.id === parseInt(id)) {
+            console.log("found");
+            event.likes = event.likes + 1;
+        }
+    })
+    // return the complete array
+    res.json(mockEvents);
+});
+
 // Adds an event - in a real solution, this would insert into a cloud datastore.
 // Currently this simply adds an event to the mock array in memory
 // this will produce unexpected behavior in a stateless kubernetes cluster. 
